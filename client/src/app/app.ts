@@ -1,21 +1,14 @@
-import { Component, Inject, OnInit, signal, inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { Component, inject } from '@angular/core';
+import { Nav } from "../layout/nav/nav";
+import { Router, RouterOutlet } from '@angular/router';
+import { ConfirmDialog } from "../shared/confirm-dialog/confirm-dialog";
 
 @Component({
   selector: 'app-root',
-  imports: [],
-  providers: [HttpClient],
+  imports: [Nav, RouterOutlet, ConfirmDialog],
   templateUrl: './app.html',
   styleUrl: './app.css'
 })
-export class App implements OnInit {
-  private httpClient = inject(HttpClient);
-  protected readonly title = signal('Dating App');
-  protected readonly users = signal<any[]>([]); 
-   ngOnInit(): void {
-    this.httpClient.get('https://jsonplaceholder.typicode.com/users').subscribe(response => {
-      this.users.set(response as any[]);
-      console.log(response);
-    });
-  }
+export class App {
+  protected router = inject(Router);
 }
